@@ -22,6 +22,7 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  //   Firebase automatically notifies your app when: A user signs up,Logs in  ,Logs out
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
@@ -30,14 +31,17 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
-  // Sign up
+  // ===> Sign up
+
+  //   auth = Firebase Auth instance.
+  // Firebase sends a request to create a new user with that email & password.
   async function signup(email, password, username) {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
       password
     );
-    await updateProfile(userCredential.user, { displayName: username });
+    await updateProfile(userCredential.user, { displayName: username }); //→ Firebase updates the user’s profile so their name shows up in your app.
     return userCredential.user;
   }
 
