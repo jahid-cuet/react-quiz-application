@@ -1,4 +1,3 @@
-// src/App.jsx
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { AuthProvider } from "../contexts/AuthContext";
 import "../styles/App.css";
@@ -8,18 +7,56 @@ import Login from "./pages/Login";
 import Quiz from "./pages/Quiz";
 import Result from "./pages/Result";
 import Signup from "./pages/Signup";
+import PrivateRoute from "./PrivateRoute";
+import PublicRoute from "./PublicRoute";
 
 function App() {
   return (
-    <Router>
+    // Wraps your app for routing. React Router listens to URL changes and decides which page to show.
+    <Router>  
+
+      {/* Provides Firebase authentication info (currentUser) and functions (signup, login, logout) to the whole app via useAuth() hook. */}
       <AuthProvider>
         <Layout>
           <Routes>
+            {/* Public Pages */}
+            <Route
+              path="/signup"
+              element={
+                <PublicRoute>
+                  <Signup />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <PublicRoute>
+                  <Login />
+                </PublicRoute>
+              }
+            />
+
+            {/* Private Pages */}
+            <Route
+              path="/quiz"
+              element={
+                <PrivateRoute>
+                  <Quiz />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/result"
+              element={
+                <PrivateRoute>
+                  <Result />
+                </PrivateRoute>
+              }
+            />
+
+            {/* Public Home */}
             <Route path="/" element={<Home />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/quiz" element={<Quiz />} />
-            <Route path="/result" element={<Result />} />
           </Routes>
         </Layout>
       </AuthProvider>
