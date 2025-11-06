@@ -13,8 +13,7 @@ import PublicRoute from "./PublicRoute";
 function App() {
   return (
     // Wraps your app for routing. React Router listens to URL changes and decides which page to show.
-    <Router>  
-
+    <Router>
       {/* Provides Firebase authentication info (currentUser) and functions (signup, login, logout) to the whole app via useAuth() hook. */}
       <AuthProvider>
         <Layout>
@@ -39,7 +38,7 @@ function App() {
 
             {/* Private Pages */}
             <Route
-              path="/quiz"
+              path="/quiz/:id"
               element={
                 <PrivateRoute>
                   <Quiz />
@@ -47,7 +46,7 @@ function App() {
               }
             />
             <Route
-              path="/result"
+              path="/result/:id"
               element={
                 <PrivateRoute>
                   <Result />

@@ -1,24 +1,35 @@
 import classes from "../styles/ProgressBar.module.css";
 import Button from "./Button";
 
-export default function ProgressBar() {
+export default function ProgressBar({ next, prev, submit, progress }) {
   return (
     <div className={classes.progressBar}>
-      <div className={classes.backButton}>
-        <span className="material-icons-outlined"> arrow_back </span>
+      {/* 🔙 Previous Button */}
+      <div className={classes.backButton} onClick={prev}>
+        <span className="material-icons-outlined">arrow_back</span>
       </div>
+
+      {/* 📊 Progress Bar */}
       <div className={classes.rangeArea}>
-        <div className={classes.tooltip}>24% Cimplete!</div>
+        <div className={classes.tooltip}>{Math.floor(progress)}% Complete!</div>
         <div className={classes.rangeBody}>
-          <div className={classes.progress} style={{ width: "20%" }}></div>
+          <div
+            className={classes.progress}
+            style={{ width: `${progress}%` }}
+          ></div>
         </div>
       </div>
-      <a href="/result">
-        <Button className={classes.next}>
-          <span>Next Question</span>
-          <span className="material-icons-outlined"> arrow_forward </span>
-        </Button>
-      </a>
+
+      {/* ⏭️ Next / Submit Button */}
+      <Button
+        className={classes.next}
+        onClick={progress === 100 ? submit : next}
+      >
+        <span>{progress === 100 ? "Submit Quiz" : "Next Question"}</span>
+        <span className="material-icons-outlined">
+          {progress === 100 ? "check_circle" : "arrow_forward"}
+        </span>
+      </Button>
     </div>
   );
 }
